@@ -1,0 +1,26 @@
+﻿<UserControl x:Class="SOAT_CQRS.UI.FoyerView" 
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:SOAT_CQRS.UI"
+             Loaded="FoyerView_OnLoaded"
+             mc:Ignorable="d" 
+             d:DesignHeight="340" d:DesignWidth="700"
+             Height="340" Width="700">
+    <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1.2*"/>
+                <ColumnDefinition Width="2*"/>
+        </Grid.ColumnDefinitions>
+        <StackPanel Grid.Column="0" Margin="15,5" Background="LimeGreen">
+            <Label Content="Liste des foyers" FontSize="24" FontWeight="Bold" HorizontalContentAlignment="Left"/>
+            <ListBox Height="250" Margin="5" ItemsSource="{Binding ListeDeFoyer}" DisplayMemberPath="Nom" >
+            </ListBox>
+            <StackPanel Orientation="Horizontal" Margin="5,0" HorizontalAlignment="Right">
+                <TextBox Width="100" Text="{Binding NomNouveaufoyer}" ></TextBox>
+                <Button Content="Ajouter" Margin="4,0" Padding="4,0"/>
+            </StackPanel>
+        </StackPanel>
+    </Grid>
+</UserControl>
