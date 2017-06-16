@@ -1,0 +1,1 @@
+SOAT_CQRS
