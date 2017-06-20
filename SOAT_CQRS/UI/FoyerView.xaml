@@ -7,20 +7,33 @@
              Loaded="FoyerView_OnLoaded"
              mc:Ignorable="d" 
              d:DesignHeight="340" d:DesignWidth="700"
-             Height="340" Width="700">
+             Height="540" Width="1100">
     <Grid>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="1.2*"/>
                 <ColumnDefinition Width="2*"/>
         </Grid.ColumnDefinitions>
         <StackPanel Grid.Column="0" Margin="15,5" Background="LimeGreen">
-            <Label Content="Liste des foyers" FontSize="24" FontWeight="Bold" HorizontalContentAlignment="Left"/>
-            <ListBox Height="250" Margin="5" ItemsSource="{Binding ListeDeFoyer}" DisplayMemberPath="Nom" >
+            <Label Content="Liste des foyers" FontSize="36" FontWeight="Bold" HorizontalContentAlignment="Left"/>
+            <ListBox Height="420" Margin="5" FontSize="18" ItemsSource="{Binding ListeDeFoyer}" DisplayMemberPath="Nom" >
             </ListBox>
             <StackPanel Orientation="Horizontal" Margin="5,0" HorizontalAlignment="Right">
-                <TextBox Width="100" Text="{Binding NomNouveaufoyer}" ></TextBox>
-                <Button Content="Ajouter" Margin="4,0" Padding="4,0"/>
+                <TextBox Width="150" Text="{Binding NomNouveaufoyer}" FontSize="18"/>
+                <Button x:Name="ButtonCreerFoyer" Content="Ajouter" Margin="4,0" Padding="4,0" FontSize="18" Click="ButtonCreerFoyer_OnClick"/>
             </StackPanel>
         </StackPanel>
+        <GroupBox  Grid.Column="1" Margin="0,5" Header="Détails du foyer" FontSize="36" FontWeight="Bold"
+            BorderBrush="LimeGreen" BorderThickness="2">
+        <StackPanel IsEnabled="False">
+            <StackPanel Orientation="Horizontal">
+                    <Label FontWeight="Bold" FontSize="22"> Nom foyer :</Label>
+                    <TextBlock FontSize="24"/>
+            </StackPanel>
+            <Label FontWeight="Bold" FontSize="24">Membres du foyer :</Label>
+            <DataGrid FontSize="18">
+                <DataGridTextColumn ></DataGridTextColumn>
+            </DataGrid>
+            </StackPanel>
+        </GroupBox>
     </Grid>
 </UserControl>

@@ -30,5 +30,11 @@ namespace SOAT_CQRS.UI
         {
             this.DataContext = new FoyerviewModel();
         }
+
+        private void ButtonCreerFoyer_OnClick(object sender, RoutedEventArgs e)
+        {
+            ((FoyerviewModel)this.DataContext).CreerFoyer();
+
+        }
     }
 }

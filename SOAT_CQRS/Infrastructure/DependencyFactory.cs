@@ -40,7 +40,8 @@ namespace SOAT_CQRS.Infrastructure
         /// </summary>
         static DependencyFactory()
         {
-            _container = new UnityContainer();      
+            _container = new UnityContainer();
+            RegisterCommands();
             RegisterQueries();     
             RegisterFactories();           
         }
@@ -66,6 +67,8 @@ namespace SOAT_CQRS.Infrastructure
         private static void RegisterFactories()
         {
             _container.RegisterType(typeof(IFoyerRepository), typeof(FoyerRepository));
+            _container.RegisterType(typeof(IFoyerReadRepository), typeof(FoyerRepository));
+            _container.RegisterType(typeof(IFoyerWriteRepository), typeof(FoyerRepository));
         }
 
 
@@ -83,7 +86,22 @@ namespace SOAT_CQRS.Infrastructure
                 _container.RegisterType(interfaceType, type);
             }
 
-            //_container.RegisterType(typeof(IQueryHandler<ChargerListeFoyerQuery,ChargerListeFoyerDTO>), typeof(ChargerFoyerQueryHandler));            
+            //_container.RegisterType(typeof(IQueryHandler<ChargerListeFoyerQuery,ChargerListeFoyerDTO>), typeof(ChargerFoyerQueryHandler));           
+        }
+
+        private static void RegisterCommands()
+        {
+            var commandHandlerType = typeof(ICommandHandler<>);
+            var types = Assembly.GetExecutingAssembly().GetTypes()
+                .Where(
+                    t => t.GetInterfaces().Any(i => i.IsGenericType && i.GetGenericTypeDefinition() == commandHandlerType))
+                .ToList();
+
+            foreach (var type in types)
+            {
+                var interfaceType = type.GetInterfaces().Single(i => i.IsGenericType && (i.GetGenericTypeDefinition() == commandHandlerType));
+                _container.RegisterType(interfaceType, type);
+            }
         }
 
         #endregion

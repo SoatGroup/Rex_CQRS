@@ -5,6 +5,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using SOAT_CQRS.Application.Commands;
 using SOAT_CQRS.Application.Query;
 using SOAT_CQRS.Application.Services;
 using SOAT_CQRS.Domain.Services;
@@ -17,9 +18,14 @@ namespace SOAT_CQRS.UI
         private FoyerRepository _foyerRepository;
 
         private IQueryProcessor _queryProcessor;
+        private ICommandProcessor _commandProcessor;
+        private Utilisateur _utilisateur;
 
-        public ObservableCollection<Foyer> ListeDeFoyer { get; set; }
+        public ObservableCollection<FoyerListeModel> ListeDeFoyer { get; set; }
         public String NomNouveaufoyer { get; set; }
+
+        public FoyerModelUI FoyerModelUi { get; private set; }
+        
 
         /// <summary>
         /// Constructeur
@@ -28,17 +34,19 @@ namespace SOAT_CQRS.UI
         {
             _foyerRepository = new FoyerRepository();
             _queryProcessor = new QueryProcessor();
-            ListeDeFoyer = new ObservableCollection<Foyer>();
+            _commandProcessor = new CommandProcessor();
+            ListeDeFoyer = new ObservableCollection<FoyerListeModel>();
 
+            this._utilisateur = new Utilisateur();
             //Test
             NomNouveaufoyer = "Test";
 
             ChargerListeFoyer();
         }
 
-        /////// <summary>
-        /////// Méthode classique
-        /////// </summary>
+        ///// <summary>
+        ///// Méthode classique
+        ///// </summary>
         //public void ChargerListeFoyer()
         //{
         //    //vérifications diverses
@@ -58,11 +66,11 @@ namespace SOAT_CQRS.UI
 
         public void ChargerListeFoyer()
         {
-            ChargerListeFoyerQuery chargerFoyerQuerry = new ChargerListeFoyerQuery();
+            ChargerListeFoyerQuery chargerListeFoyerQuerry = new ChargerListeFoyerQuery();
             this.NewTask(() =>
                 {
                     ChargerListeFoyerDTO result =
-                        _queryProcessor.Process<ChargerListeFoyerQuery, ChargerListeFoyerDTO>(chargerFoyerQuerry);
+                        _queryProcessor.Process<ChargerListeFoyerQuery, ChargerListeFoyerDTO>(chargerListeFoyerQuerry);
                     
                     return result;
                 },
@@ -71,13 +79,58 @@ namespace SOAT_CQRS.UI
                     this.ListeDeFoyer.Clear();                    
                     foreach (var f in result.ListeDeFoyer)
                     {
-                        this.ListeDeFoyer.Add(f);
+                        this.ListeDeFoyer.Add(new FoyerListeModel() {Id = f.Item1, Nom = f.Item2});
                     }                                        
                 },
                 (ex) => { throw ex; });
         }
 
 
+        //public void CreerFoyer()
+        //{
+        //    if (!String.IsNullOrWhiteSpace(this.NomNouveaufoyer))
+        //    {
+        //        Foyer foyer = new Foyer(this.NomNouveaufoyer);
+        //        _foyerRepository.Add(foyer);
+        //        this.ListeDeFoyer.Add(foyer);
+        //    }
+        //}
+
+        public void CreerFoyer()
+        {
+            if (!String.IsNullOrWhiteSpace(this.NomNouveaufoyer))
+            {
+                CreerFoyerCommand creerfoyerCommand = new CreerFoyerCommand() {NomFoyer = this.NomNouveaufoyer};
+                this.NewTask(() =>
+                {
+                    _commandProcessor.Process<CreerFoyerCommand>(creerfoyerCommand);                    
+                },
+                    () =>
+                    {
+                        ChargerListeFoyer();
+                    },
+                    (ex) => { throw ex; });
+            }
+        }
+
+        public void ChargerFoyer(Foyer FoyerSelectionner)
+        {
+            {
+                ChargerFoyerQuery chargerFoyerQuerry = new ChargerFoyerQuery(FoyerSelectionner.Id, _utilisateur.Id );
+                this.NewTask(() =>
+                {
+                    ChargerFoyerDTO result =
+                        _queryProcessor.Process<ChargerFoyerQuery, ChargerFoyerDTO>(chargerFoyerQuerry);
+
+                    return result;
+                },
+                    (result) =>
+                    {
+                        this.FoyerModelUi = new FoyerModelUI(result);                                             
+                    },
+                    (ex) => { throw ex; });
+            }
+        }
     }
 
 }

@@ -10,5 +10,12 @@ namespace SOAT_CQRS.Application.Query
     class ChargerFoyerQuery : IQuery<ChargerFoyerDTO>
     {
         public Guid FoyerId { get; set; }
+
+        public Guid UserId { get; set; }
+
+        public ChargerFoyerQuery(Guid userId, Guid foyerId)
+        {
+            
+        }
     }
 }

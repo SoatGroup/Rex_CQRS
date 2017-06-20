@@ -12,15 +12,6 @@ namespace SOAT_CQRS.Domain.Services
     public interface ICommandProcessor
     {
         /// <summary>
-        /// Traite la commande et retourne le résultat de cette commande.
-        /// </summary>
-        /// <typeparam name="TCommand">Type de la commande.</typeparam>
-        /// <typeparam name="TResult">Type du résultat de la commande.</typeparam>
-        /// <param name="command">Commande à traiter</param>
-        /// <returns>le résultat de la commande.</returns>
-        TResult Process<TCommand, TResult>(TCommand command) where TCommand : ICommand<TResult>;
-
-        /// <summary>
         /// Traite la commande.
         /// </summary>
         /// <typeparam name="TCommand">Type de la commande.</typeparam>

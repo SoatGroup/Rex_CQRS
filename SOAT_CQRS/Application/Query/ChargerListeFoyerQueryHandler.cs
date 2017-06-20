@@ -10,13 +10,12 @@ namespace SOAT_CQRS.Application.Query
 {
     public class ChargerListeFoyerQueryHandler : IQueryHandler<ChargerListeFoyerQuery, ChargerListeFoyerDTO>
     {
-
         #region Propriete
-        private IFoyerRepository _foyerRepository;
+        private IFoyerReadRepository _foyerRepository;
         #endregion
 
         #region Constructeur
-        public ChargerListeFoyerQueryHandler(IFoyerRepository foyerRepository)
+        public ChargerListeFoyerQueryHandler(IFoyerReadRepository foyerRepository)
         {
             _foyerRepository = foyerRepository;
         }
@@ -25,7 +24,10 @@ namespace SOAT_CQRS.Application.Query
         public ChargerListeFoyerDTO Handle(ChargerListeFoyerQuery query)
         {
             ChargerListeFoyerDTO result = new ChargerListeFoyerDTO();
-            result.ListeDeFoyer = _foyerRepository.GetAll();
+            var foyers = _foyerRepository.GetAll()
+                .Select(f => new Tuple<Guid, string>(f.Id, f.Nom))
+                .ToList();
+            result.ListeDeFoyer = foyers;            
             return result;
         }
     }

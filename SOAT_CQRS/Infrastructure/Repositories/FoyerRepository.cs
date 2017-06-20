@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Media;
 using SOAT_CQRS.Domain.Model;
 
 namespace SOAT_CQRS.Infrastructure.Repositories
@@ -11,7 +12,7 @@ namespace SOAT_CQRS.Infrastructure.Repositories
     /// Fake Repository
     /// </summary>
     /// <remarks>Le repository n'as pas d'importance ici. Ses méthodes sont donc simplifié</remarks>
-    public class FoyerRepository : IFoyerRepository
+    public class FoyerRepository : IFoyerRepository, IFoyerReadRepository, IFoyerWriteRepository
     {
         private static IList<Foyer> _tempListFoyer;
 
@@ -31,6 +32,10 @@ namespace SOAT_CQRS.Infrastructure.Repositories
             return _tempListFoyer.SingleOrDefault(f => f.Id == id);
         }
 
+        //Foyer IFoyerReadRepository.GetById(Guid id)
+        //{
+        //    return _tempListFoyer.SingleOrDefault(f => f.Id == id);
+        //}
 
         static FoyerRepository()
         {

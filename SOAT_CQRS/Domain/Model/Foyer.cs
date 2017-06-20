@@ -26,5 +26,10 @@ namespace SOAT_CQRS.Domain.Model
             this.PersonnesFoyer.Add(chefDeFamille);
         }
 
+        public Foyer(String nomfoyer)
+        {
+            this.Nom = nomfoyer;
+        }
+
     }
 }

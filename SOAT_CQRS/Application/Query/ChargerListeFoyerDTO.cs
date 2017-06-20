@@ -9,11 +9,11 @@ namespace SOAT_CQRS.Application.Query
 {
     public class ChargerListeFoyerDTO
     {
-        public IList<Foyer> ListeDeFoyer { get; set; }
+        public IList<Tuple<Guid,String>> ListeDeFoyer { get; set; }
 
         public ChargerListeFoyerDTO()
         {
-            ListeDeFoyer = new List<Foyer>();
+            ListeDeFoyer = new List<Tuple<Guid, string>>();
         }
     }
 }

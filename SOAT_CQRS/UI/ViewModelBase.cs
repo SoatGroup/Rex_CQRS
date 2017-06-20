@@ -33,5 +33,23 @@ namespace SOAT_CQRS.UI
             },
             TaskScheduler.FromCurrentSynchronizationContext());
         }
+
+        public void NewTask(Action processToExecute, Action completedCallback, Action<Exception> failedCallback)
+        {
+            var task = Task.Factory.StartNew(processToExecute).ContinueWith(t =>
+            {
+                if (t.IsFaulted)
+                {
+                    failedCallback(t.Exception.GetBaseException());
+                }
+                else
+                {
+                    completedCallback?.Invoke();
+                }
+            },
+            TaskScheduler.FromCurrentSynchronizationContext());
+        }
+
+
     }
 }

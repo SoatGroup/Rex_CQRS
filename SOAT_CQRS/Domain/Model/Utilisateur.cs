@@ -8,5 +8,11 @@ namespace SOAT_CQRS.Domain.Model
 {
     public class Utilisateur
     {
+        public Guid Id { get; internal set; }
+
+        public Utilisateur()
+        {
+            this.Id = new Guid();
+        }
     }
 }

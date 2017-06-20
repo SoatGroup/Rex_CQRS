@@ -67,15 +67,21 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Application\Commands\CreerFoyerCommand.cs" />
+    <Compile Include="Application\Commands\CreerFoyerCommandHandler.cs" />
     <Compile Include="Application\Query\ChargerFoyerQuery.cs" />
     <Compile Include="Application\Query\ChargerFoyerDTO.cs" />
     <Compile Include="Application\Query\ChargerFoyerQueryHandler.cs" />
     <Compile Include="Application\Query\ChargerListeFoyerDTO.cs" />
     <Compile Include="Application\Query\ChargerListeFoyerQuery.cs" />
     <Compile Include="Application\Query\ChargerListeFoyerQueryHandler.cs" />
+    <Compile Include="Domain\Model\IFoyerReadRepository.cs" />
     <Compile Include="Domain\Model\IFoyerRepository.cs" />
+    <Compile Include="Domain\Model\IFoyerWriteRepository.cs" />
     <Compile Include="Domain\Model\Utilisateur.cs" />
     <Compile Include="Infrastructure\DependencyFactory.cs" />
+    <Compile Include="UI\FoyerListeModel.cs" />
+    <Compile Include="UI\FoyerModelUI.cs" />
     <Compile Include="UI\ViewModelBase.cs" />
     <Page Include="UI\FoyerView.xaml">
       <SubType>Designer</SubType>
@@ -137,9 +143,7 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Application\Commands\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
