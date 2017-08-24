@@ -40,10 +40,10 @@ namespace SOAT_CQRS.Infrastructure.Repositories
         static FoyerRepository()
         {
             _tempListFoyer = new List<Foyer>();
-            PoulateBase(); //Faux remplissage de base
+            PopulateBase(); //Faux remplissage de base
         }
 
-        private static void PoulateBase()
+        private static void PopulateBase()
         {
             Personne chefFoyer1 = new Personne()
             {
